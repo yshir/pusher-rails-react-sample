@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 
+import { TaskList } from '@/components/TaskList';
 import { useTaskList } from '@/hooks/useTaskList';
 
 const Page: NextPage = () => {
@@ -9,15 +10,7 @@ const Page: NextPage = () => {
     return <p>loading...</p>;
   }
 
-  return (
-    <div>
-      {tasks.map(task => (
-        <div key={task.id}>
-          <p>{task.title}</p>
-        </div>
-      ))}
-    </div>
-  );
+  return <TaskList tasks={tasks} />;
 };
 
 export default Page;
