@@ -8,10 +8,14 @@ class TasksController < ApplicationController
   end
 
   def create
+    pusher = PusherClient.new
+
     task = Task.new(create_params)
     task.is_done = false
 
     if task.save
+      pusher.trigger('task-channel', 'task-created', tasks: Task.all)
+
       head :no_content
     else
       head :bad_request

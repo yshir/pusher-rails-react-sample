@@ -1,4 +1,5 @@
-import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
+import { useCallback } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { TaskCard } from '@/components/TaskCard';
 import { useTaskCreate } from '@/hooks/useTaskCreate';
@@ -9,20 +10,19 @@ type Props = {
 };
 
 export const TaskList: React.VFC<Props> = ({ tasks }) => {
-  const [value, setValue] = useState('');
   const { create } = useTaskCreate();
-
-  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  }, []);
+  const methods = useForm({
+    defaultValues: {
+      title: '',
+    },
+  });
 
   const onSubmit = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      await create(value);
-      e.preventDefault();
-      setValue('');
+    async (data: { title: string }) => {
+      await create(data.title);
+      methods.reset();
     },
-    [create, value],
+    [create, methods],
   );
 
   return (
@@ -30,8 +30,8 @@ export const TaskList: React.VFC<Props> = ({ tasks }) => {
       <div className="border border-gray-200 rounded-lg shadow-lg my-32 p-12">
         <h1 className="text-2xl font-semibold mb-6">Task List</h1>
 
-        <form className="flex items-center space-x-2 mb-6" onSubmit={onSubmit}>
-          <input className="w-full border p-1.5 rounded-md" type="text" value={value} onChange={onChange} />
+        <form className="flex items-center space-x-2 mb-6" onSubmit={methods.handleSubmit(onSubmit)}>
+          <input className="w-full border p-1.5 rounded-md" {...methods.register('title')} />
           <button
             className="border rounded-md py-1.5 px-6 bg-gray-800 hover:bg-gray-700 transition-colors text-white"
             type="submit"

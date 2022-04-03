@@ -1,6 +1,7 @@
 import { NextPage } from 'next';
 
 import { TaskList } from '@/components/TaskList';
+import { TaskListener } from '@/components/TaskListener';
 import { useTaskList } from '@/hooks/useTaskList';
 
 const Page: NextPage = () => {
@@ -10,7 +11,11 @@ const Page: NextPage = () => {
     return <p>loading...</p>;
   }
 
-  return <TaskList tasks={tasks} />;
+  return (
+    <TaskListener>
+      <TaskList tasks={tasks} />
+    </TaskListener>
+  );
 };
 
 export default Page;
