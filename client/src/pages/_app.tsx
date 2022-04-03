@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { SWRConfig } from 'swr';
 
 import { APP_TITLE } from '@/constants/app';
+import { fetcher } from '@/lib/fetcher';
 
 import '../styles/global.css';
 
@@ -16,6 +17,7 @@ const MyApp = ({ Component, pageProps }: AppProps): React.ReactElement => {
       </Head>
         <SWRConfig
           value={{
+            fetcher,
             revalidateIfStale: false,
             revalidateOnFocus: false,
             revalidateOnReconnect: false,
