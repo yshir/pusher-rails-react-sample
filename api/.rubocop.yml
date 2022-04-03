@@ -1,0 +1,24 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 3.1
+  NewCops: enable
+  Exclude:
+    - "db/**/*"
+    - "config/**/*"
+    - "bin/*"
+    - "vendor/bundle/**/*"
+    - "tmp/**/*"
+    - "public/**/*"
+    - "docs/**/*"
+
+Metrics/BlockLength:
+  Max: 40
+  Exclude:
+    - "spec/**/*"
+    - "lib/tasks/*"
+    - "db/seeds/*"
+    - "config/routes.rb"
